@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Mixtral Chat</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
+</head>
+<body>
+  <!-- Floating emojis container -->
+  <div class="floating-emojis">
+    <span>🤖</span>
+    <span>💬</span>
+    <span>✨</span>
+    <span>🌟</span>
+    <span>🧠</span>
+  </div>
+
+  <!-- Chat App Container -->
+  <div class="chat-container">
+    <header>
+      <h1>💬 Mixtral Chat</h1>
+      <p>Talk to Mixtral-8x7B - Powered by Hugging Face</p>
+    </header>
+
+    <div id="chat-box" class="chat-box"></div>
+
+    <form id="chat-form">
+      <input type="text" id="user-input" placeholder="Type your message..." required />
+      <button type="submit">Send</button>
+    </form>
+  </div>
+
+  <script>
+    const form = document.getElementById("chat-form");
+    const input = document.getElementById("user-input");
+    const chatBox = document.getElementById("chat-box");
+
+    const appendMessage = (sender, text) => {
+      const message = document.createElement("div");
+      message.classList.add("message", sender);
+      message.innerHTML = `<span>${text}</span>`;
+      chatBox.appendChild(message);
+      chatBox.scrollTop = chatBox.scrollHeight;
+    };
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const userText = input.value;
+      appendMessage("user", userText);
+      input.value = "";
+
+      appendMessage("bot", "Thinking...");
+
+      const response = await fetch("/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ prompt: userText }),
+      });
+
+      const data = await response.json();
+      const botReplies = document.querySelectorAll(".bot");
+      botReplies[botReplies.length - 1].remove();
+      appendMessage("bot", data.reply);
+    });
+  </script>
+</body>
+</html>
