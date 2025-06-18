@@ -1,0 +1,137 @@
+/* General Fullscreen Layout */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(to right, #a18cd1, #fbc2eb);
+  height: 100vh;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Floating Emojis */
+.floating-emojis span {
+  position: absolute;
+  font-size: 2rem;
+  color: rgba(255, 255, 255, 0.7);
+  animation: floatEmoji 10s linear infinite;
+}
+
+.floating-emojis span:nth-child(1) {
+  left: 10%;
+  animation-delay: 0s;
+}
+.floating-emojis span:nth-child(2) {
+  left: 30%;
+  animation-delay: 2s;
+}
+.floating-emojis span:nth-child(3) {
+  left: 50%;
+  animation-delay: 4s;
+}
+.floating-emojis span:nth-child(4) {
+  left: 70%;
+  animation-delay: 6s;
+}
+.floating-emojis span:nth-child(5) {
+  left: 90%;
+  animation-delay: 8s;
+}
+
+@keyframes floatEmoji {
+  0% {
+    top: 100%;
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    top: -10%;
+    opacity: 0;
+  }
+}
+
+/* Chat Container */
+.chat-container {
+  background: white;
+  width: 100%;
+  max-width: 600px;
+  height: 90vh;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  border-radius: 15px;
+  box-shadow: 0 0 25px rgba(0,0,0,0.15);
+  overflow: hidden;
+  position: relative;
+  z-index: 10;
+  top: 5vh;
+}
+
+header {
+  background-color: #6a0dad;
+  color: white;
+  padding: 1rem;
+  text-align: center;
+}
+
+.chat-box {
+  flex: 1;
+  padding: 1rem;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background: #f8f5ff;
+}
+
+.message {
+  max-width: 80%;
+  padding: 10px 14px;
+  border-radius: 10px;
+  animation: fadeIn 0.3s ease;
+}
+
+.message.user {
+  background-color: #d1b3ff;
+  align-self: flex-end;
+}
+
+.message.bot {
+  background-color: #ece4ff;
+  align-self: flex-start;
+}
+
+form {
+  display: flex;
+  border-top: 1px solid #ddd;
+}
+
+form input {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  font-size: 1rem;
+}
+
+form button {
+  background-color: #6a0dad;
+  color: white;
+  border: none;
+  padding: 0 20px;
+  cursor: pointer;
+}
+
+form button:hover {
+  background-color: #580d91;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
